@@ -1,0 +1,22 @@
+# --- Dependencias (Lo más importante) ---
+# No subimos esto porque pesa mucho y se genera con 'npm install'
+node_modules/
+
+# --- Seguridad (CRÍTICO) ---
+# Aquí están tus claves de Mongo y JWT. ¡Nunca las subas!
+.env
+
+# --- Logs y Errores ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Archivos del Sistema Operativo ---
+# Archivos basura que crean Mac y Windows
+.DS_Store
+Thumbs.db
+
+# --- Editores de Código (Opcional) ---
+# Configuraciones personales de tu VS Code
+.vscode/
+.idea/
