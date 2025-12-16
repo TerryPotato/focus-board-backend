@@ -1,34 +1,33 @@
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-const User = require('../models/usersModels')
+const User = require('../models/usersModel') // CORREGIDO (Singular)
 
-const protect = asyncHandler (async (req, res, next) =>{
-
+const protect = asyncHandler(async (req, res, next) => {
     let token
 
-    if(req.headers.authorization && req.authorization.startsWith('Bearer')){
-        try{
-            //Obtenemos el token
+    // CORREGIDO: req.headers.authorization
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            // Obtenemos el token
             token = req.headers.authorization.split(' ')[1]
 
-            //verificamos que el token sea valido (firma, caducidad)
+            // Verificamos firma
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-            //Obtener los datos del usuario a traves del id_usuario que esta en el paylod
-            //para que cualquier endpoint que use proteccion tenga acceso a esos datos
-            req.user = await User.findById(decoded.id_ususario).select('-password')
+            // CORREGIDO: Usamos decoded.id (porque así lo guardaste en el controlador)
+            req.user = await User.findById(decoded.id).select('-password')
 
-            //continuamos con un next para salir de aqui y evetar quedarnos para simpre
             next()
-        } catch (error){
+        } catch (error) {
             console.log(error)
             res.status(401)
             throw new Error('Acceso no autorizado')
-
         }
-    } if (!token){
+    }
+
+    if (!token) {
         res.status(401)
-            throw new Error('Acceso no autorizado, no se proporciono un token')
+        throw new Error('Acceso no autorizado, no se proporciono un token')
     }
 })
 

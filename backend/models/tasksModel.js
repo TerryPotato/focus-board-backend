@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const taskSchema = nomgoose.Schema({
+const taskSchema = mongoose.Schema({
     //title, description, status, tag, timestamps
     title: {
         type: String,
