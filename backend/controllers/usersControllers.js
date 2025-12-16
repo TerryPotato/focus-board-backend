@@ -33,6 +33,7 @@ const registrar = asyncHandler(async (req, res) => {
 
     if (user) {
         res.status(201).json({
+            message: "Registro exitoso",
             _id: user.id,
             name: user.name,
             email: user.email,
@@ -53,6 +54,7 @@ const login = asyncHandler(async (req, res) => {
     // 2. Verificar password
     if (user && (await bcrypt.compare(password, user.password))) {
         res.status(200).json({
+            message: "Log In exitoso",
             _id: user.id,
             name: user.name,
             email: user.email,
